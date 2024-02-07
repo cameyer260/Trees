@@ -8,6 +8,12 @@ public class Tree implements BinarySearchTreeInterface{
     }
     
     public void add(Comparable cmp) {
+		// if cmp is a Integer then convert it to a string 
+		// so that the Comparable can be compared to the other String
+		if (cmp.getClass() == Integer.class) {
+			cmp = cmp + "";
+		}
+
     	myRoot = add(myRoot, cmp);
     }
     
@@ -27,6 +33,10 @@ public class Tree implements BinarySearchTreeInterface{
     }
     
     public void remove(Comparable c) {
+		if (c.getClass() == Integer.class) {
+			c = c + "";
+		}
+
     	remove(c, myRoot);
     }
     
@@ -44,6 +54,10 @@ public class Tree implements BinarySearchTreeInterface{
     }
     
     public boolean search(Comparable c) {
+		if (c.getClass() == Integer.class) {
+			c = c + "";
+		}
+
     	return search(c, myRoot);
     }
     
@@ -51,16 +65,19 @@ public class Tree implements BinarySearchTreeInterface{
     	if(c.equals((Comparable) n.getValue())) {
     		return true;
     	}
-    	if(n.getLeft() != null  && search(c, n.getLeft()) {
-    		return true; 
+    	if(n.getLeft() != null  && search(c, n.getLeft())) {
+    		// return true;
     	}
-    	if(n.getRight() != null && search(c, n.getRight()) {
-    		return true; 
-    	}
+		if(n.getRight() != null && search(c, n.getRight())) {
+			return true; 
+		}
     	return false;
     }
     
     public TreeNode searchParentNode(Comparable c) {
+		if (c.getClass() == Integer.class) {
+			c = c + "";
+		}
     	return searchParentNode(c, myRoot);
     }
     
