@@ -65,23 +65,23 @@ public class Tree implements BinarySearchTreeInterface{
     }
     
     private TreeNode searchParentNode(Comparable c, TreeNode root) {
-    	if(search(c, root)) {
-    		if(((Comparable) root.getValue()).compareTo(c) == 0) {
-    			return null;
-    		}
-    		if((((Comparable) root.getLeft().getValue()).compareTo(c) == 0)) {
-    			return root;
-    		}
-    		if(((Comparable) root.getRight().getValue()).compareTo(c) == 0 ) {
-    			return root;
-    		}
-    		if(((Comparable) root.getValue()).compareTo(c) > 0) {
-    			searchParentNode(c, root.getLeft());
-    		} else {
-    			searchParentNode(c, root.getRight());
-    		}
-    	}
-    	return null;
+	// check if null then return null 
+	if (root == null || root.getValue().equals(c)) {
+		return null;
+	}
+
+	// checks if getLeft() or getRight() equals(c) 
+	if ((root.getLeft()  != null && root.getLeft().getValue().equals (c))  ||
+	    (root.getRight() != null && root.getRight().getValue().equals(c))) {
+		return root;
+	}
+
+	// if it does not equal c and less than 0 gets the left side else gets the right side
+	if (c.compareTo(root.getValue()) < 0) {
+		return searchParentNode(c, root.getLeft());
+	} else {
+		return searchParentNode(c, root.getRight());
+	}
     }
     
     public String toStringPreOrder() {
