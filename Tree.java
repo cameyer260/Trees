@@ -10,7 +10,10 @@ public class Tree implements BinarySearchTreeInterface{
     public void add(Comparable cmp) {
 		// if cmp is a Integer then convert it to a string 
 		// so that the Comparable can be compared to the other String
-		if (cmp.getClass() == Integer.class) {
+		if (cmp.getClass() == Integer.class  || cmp.getClass() == double.class ||
+			cmp.getClass() == float.class    || cmp.getClass() == long.class) {
+			cmp = cmp + "";
+		} else if (cmp.getClass() == String.class) {
 			cmp = cmp + "";
 		}
 
@@ -33,7 +36,8 @@ public class Tree implements BinarySearchTreeInterface{
     }
     
     public void remove(Comparable c) {
-		if (c.getClass() == Integer.class) {
+		if (c.getClass() == Integer.class || c.getClass() == double.class ||
+			c.getClass() == float.class   || c.getClass() == long.class){
 			c = c + "";
 		}
 
@@ -54,10 +58,10 @@ public class Tree implements BinarySearchTreeInterface{
     }
     
     public boolean search(Comparable c) {
-		if (c.getClass() == Integer.class) {
+		if (c.getClass() == Integer.class || c.getClass() == double.class ||
+			c.getClass() == float.class   || c.getClass() == long.class) {
 			c = c + "";
-		}
-
+		} 
     	return search(c, myRoot);
     }
     
@@ -66,7 +70,7 @@ public class Tree implements BinarySearchTreeInterface{
     		return true;
     	}
     	if(n.getLeft() != null  && search(c, n.getLeft())) {
-    		// return true;
+    		return true;
     	}
 		if(n.getRight() != null && search(c, n.getRight())) {
 			return true; 
@@ -75,30 +79,31 @@ public class Tree implements BinarySearchTreeInterface{
     }
     
     public TreeNode searchParentNode(Comparable c) {
-		if (c.getClass() == Integer.class) {
+		if (c.getClass() == Integer.class || c.getClass() == double.class ||
+			c.getClass() == float.class   || c.getClass() == long.class) {
 			c = c + "";
-		}
+		} 
     	return searchParentNode(c, myRoot);
     }
     
     private TreeNode searchParentNode(Comparable c, TreeNode root) {
-	// check if null then return null 
-	if (root == null || root.getValue().equals(c)) {
-		return null;
-	}
+		// check if null then return null 
+		if (root == null || root.getValue().equals(c)) {
+			return null;
+		}
 
-	// checks if getLeft() or getRight() equals(c) 
-	if ((root.getLeft()  != null && root.getLeft().getValue().equals (c))  ||
-	    (root.getRight() != null && root.getRight().getValue().equals(c))) {
-		return root;
-	}
+		// checks if getLeft() or getRight() equals(c) 
+		if ((root.getLeft()  != null && root.getLeft().getValue().equals (c))  ||
+			(root.getRight() != null && root.getRight().getValue().equals(c))) {
+			return root;
+		}
 
-	// if it does not equal c and less than 0 gets the left side else gets the right side
-	if (c.compareTo(root.getValue()) < 0) {
-		return searchParentNode(c, root.getLeft());
-	} else {
-		return searchParentNode(c, root.getRight());
-	}
+		// if it does not equal c and less than 0 gets the left side else gets the right side
+		if (c.compareTo(root.getValue()) < 0) {
+			return searchParentNode(c, root.getLeft());
+		} else {
+			return searchParentNode(c, root.getRight());
+		}
     }
     
     public String toStringPreOrder() {
@@ -125,6 +130,7 @@ public class Tree implements BinarySearchTreeInterface{
     	toStringInOrder(myRoot, s);
     	return s.toString();
     }
+
     
     private void toStringInOrder(TreeNode root, StringBuilder s) {
     	if(root.getLeft() != null) {
