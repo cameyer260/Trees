@@ -51,11 +51,11 @@ public class Tree implements BinarySearchTreeInterface{
     	if(c.equals((Comparable) n.getValue())) {
     		return true;
     	}
-    	if(n.getLeft() != null) {
-    		search(c, n.getLeft());
+    	if(n.getLeft() != null && search(c, n.getLeft()) {
+    		return true; 
     	}
-    	if(n.getRight() != null) {
-    		search(c, n.getRight());
+    	if(n.getRight() != null search(c, n.getRight()) {
+    		return true; 
     	}
     	return false;
     }
