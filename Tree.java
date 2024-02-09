@@ -8,19 +8,33 @@ public class Tree implements BinarySearchTreeInterface{
     }
     
     public void add(Comparable cmp) {
+		if(cmp == null) {
+			return; 
+		}
+
 		// if cmp is a Integer then convert it to a string 
 		// so that the Comparable can be compared to the other String
-		if (cmp.getClass() == Integer.class  || cmp.getClass() == double.class ||
-			cmp.getClass() == float.class    || cmp.getClass() == long.class) {
+		// if (cmp.getClass() == Integer.class  || cmp.getClass() == double.class ||
+		// 	cmp.getClass() == float.class    || cmp.getClass() == long.class) {
+		// 		cmp = cmp + "";
+		// }
+		if(cmp.getClass() == Integer.class) {
 			cmp = cmp + "";
-		} else if (cmp.getClass() == String.class) {
+		}
+
+		if(cmp.getClass() == Double.class) { 
+			cmp = cmp + "";
+		}
+
+		if(cmp.getClass() == Float.class) {
 			cmp = cmp + "";
 		}
 
     	myRoot = add(myRoot, cmp);
     }
     
-    private TreeNode add(TreeNode r, Comparable cmp) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private TreeNode add(TreeNode r, Comparable cmp) {
 		if (r == null) { 
 			r = new TreeNode(cmp, null, null);
 		}
@@ -36,8 +50,19 @@ public class Tree implements BinarySearchTreeInterface{
     }
     
     public void remove(Comparable c) {
-		if (c.getClass() == Integer.class || c.getClass() == double.class ||
-			c.getClass() == float.class   || c.getClass() == long.class){
+		if(c == null) {
+			return; 
+		}
+
+		if(c.getClass() == Integer.class) {
+			c = c + "";
+		}
+
+		if(c.getClass() == Double.class) { 
+			c = c + "";
+		}
+
+		if(c.getClass() == Float.class) {
 			c = c + "";
 		}
 
@@ -58,14 +83,22 @@ public class Tree implements BinarySearchTreeInterface{
     }
     
     public boolean search(Comparable c) {
-		if (c.getClass() == Integer.class || c.getClass() == double.class ||
-			c.getClass() == float.class   || c.getClass() == long.class) {
+		if(c.getClass() == Integer.class) {
 			c = c + "";
-		} 
+		}
+
+		if(c.getClass() == Double.class) { 
+			c = c + "";
+		}
+
+		if(c.getClass() == Float.class) {
+			c = c + "";
+		}
     	return search(c, myRoot);
     }
     
     private boolean search(Comparable c, TreeNode n) {
+
     	if(c.equals((Comparable) n.getValue())) {
     		return true;
     	}
@@ -79,14 +112,27 @@ public class Tree implements BinarySearchTreeInterface{
     }
     
     public TreeNode searchParentNode(Comparable c) {
-		if (c.getClass() == Integer.class || c.getClass() == double.class ||
-			c.getClass() == float.class   || c.getClass() == long.class) {
+		if(c == null) {
+			return null; 
+		}
+
+		if(c.getClass() == Integer.class) {
 			c = c + "";
-		} 
+		}
+
+		if(c.getClass() == Double.class) { 
+			c = c + "";
+		}
+
+		if(c.getClass() == Float.class) {
+			c = c + "";
+		}
+		
     	return searchParentNode(c, myRoot);
     }
     
     private TreeNode searchParentNode(Comparable c, TreeNode root) {
+
 		// check if null then return null 
 		if (root == null || root.getValue().equals(c)) {
 			return null;
