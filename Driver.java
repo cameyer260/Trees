@@ -42,13 +42,13 @@ public class Driver {
 		
 		//case 1
 		System.out.println("Case 1: ");
-		System.out.println(myTree1.toStringInOrder());
-		System.out.println(myTree1.toStringPreOrder());
+		System.out.println("In Order: " + myTree1.toStringInOrder());
+		System.out.println("Pre Order: " + myTree1.toStringPreOrder());
 		System.out.println("");
 		
 		//case 2
 		System.out.println("Case 2: ");
-		System.out.println(myTree2.toStringInOrder());
-		System.out.println(myTree2.toStringPreOrder());
+		System.out.println("In Order: " + myTree2.toStringInOrder());
+		System.out.println("Pre Order: " + myTree2.toStringPreOrder());
 	}
 }

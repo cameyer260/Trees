@@ -23,6 +23,9 @@ public class Tree implements BinarySearchTreeInterface {
      * add method, calls private help method
      */
     public void add(Comparable cmp) {
+    	if(cmp == null) {
+    		return;
+    	}
     	myRoot = add(myRoot, cmp);
     }
     
@@ -54,66 +57,6 @@ public class Tree implements BinarySearchTreeInterface {
     }
     
     /**
-     * remove method
-     */
-    public void remove(Comparable c) {
-    	remove(myRoot, c);
-    }
-    
-    /**
-     * remove method private helper method
-     * @param root
-     * @param c
-     */
-    private void remove(TreeNode root, Comparable c) {
-    	//case 1
-    	TreeNode parentNode = searchParentNode(c);
-    	TreeNode deleteNode = searchNode(c);
-    	TreeNode childNode;
-    	if(((deleteNode.getLeft() == null) &&
-    	   (deleteNode.getRight() != null)) ||
-    	   ((deleteNode.getLeft() != null) &&
-    	    (deleteNode.getRight() == null))) {
-    		if(deleteNode.getLeft() == null) {
-    			childNode = deleteNode.getRight();
-    		} else {
-    			childNode = deleteNode.getLeft();
-    		}
-    		
-    		
-    	}
-    }
-    
-    /**
-     * searchNode method, searches for a comparable
-     * private helper method for remove
-     * @param c
-     * @return
-     */
-    private TreeNode searchNode(Comparable c) {
-    	
-    	return null;
-    }
-    
-    /**
-     * height method, calls private helper
-     */
-    public int height() {
-    	return height(myRoot);
-    }
-    
-    /**
-     * private helper method for height method
-     * returns the integer value of the height for the tree
-     * @param r
-     * @return
-     */
-    private int height(TreeNode r) {
-    	if(r == null) return 0;
-    	return 1 + Math.max(height(r.getLeft()), height(r.getRight()));
-    }
-    
-    /**
      * search method
      */
     public boolean search(Comparable c) {
@@ -141,39 +84,21 @@ public class Tree implements BinarySearchTreeInterface {
     }
     
     /**
-     * searchParentNode method
-     * @param c
-     * @return
+     * height method, calls private helper
      */
-    public TreeNode searchParentNode(Comparable c) {
-    	return searchParentNode(c, myRoot);
+    public int height() {
+    	return height(myRoot);
     }
     
     /**
-     * searchParentNode private helper method
-     * returns the parent TreeNode of the comparable you put in the parameter
-     * @param c
-     * @param root
+     * private helper method for height method
+     * returns the integer value of the height for the tree
+     * @param r
      * @return
      */
-    private TreeNode searchParentNode(Comparable c, TreeNode root) {
-    	// check if null then return null 
-    	if (root == null || root.getValue().equals(c)) {
-    		return null;
-    	}
-
-    	// checks if getLeft() or getRight() equals(c) 
-    	if ((root.getLeft()  != null && root.getLeft().getValue().equals (c))  ||
-    	    (root.getRight() != null && root.getRight().getValue().equals(c))) {
-    		return root;
-    	}
-
-    	// if it does not equal c and less than 0 gets the left side else gets the right side
-    	if (c.compareTo((Comparable) root.getValue()) < 0) {
-    		return searchParentNode(c, root.getLeft());
-    	} else {
-    		return searchParentNode(c, root.getRight());
-    	}
+    private int height(TreeNode r) {
+    	if(r == null) return 0;
+    	return 1 + Math.max(height(r.getLeft()), height(r.getRight()));
     }
     
     /**
@@ -222,5 +147,76 @@ public class Tree implements BinarySearchTreeInterface {
             toStringInOrder(root.getRight(), sb);
             sb.append(")");
         }
-    } 
+    }
+    
+    /**
+     * remove method
+     */
+    public void remove(Comparable c) {
+    	remove(myRoot, c);
+    }
+    
+    /**
+     * remove method private helper method
+     * @param root
+     * @param c
+     */
+    private void remove(TreeNode root, Comparable c) {
+    	
+    }
+    
+    /**
+     * searchNode method, searches for a comparable
+     * private helper method for remove
+     * @param c
+     * @return
+     */
+//    private TreeNode searchNode(Comparable c, TreeNode root) {
+//    	if(c.equals((Comparable) root.getValue())) {
+//    		return root;
+//    	}
+//    	if(root.getLeft() != null && search(c, root.getLeft())) {
+//    		return //tree node;
+//    	}
+//    	if(root.getRight() != null && search(c, root.getRight())) {
+//    		return //tree node; 
+//    	}
+//    	return //tree node;
+//    }
+    
+    /**
+     * searchParentNode method
+     * @param c
+     * @return
+     */
+    public TreeNode searchParentNode(Comparable c) {
+    	return searchParentNode(c, myRoot);
+    }
+    
+    /**
+     * searchParentNode private helper method
+     * returns the parent TreeNode of the comparable you put in the parameter
+     * @param c
+     * @param root
+     * @return
+     */
+    private TreeNode searchParentNode(Comparable c, TreeNode root) {
+    	// check if null then return null 
+    	if (root == null || root.getValue().equals(c)) {
+    		return null;
+    	}
+
+    	// checks if getLeft() or getRight() equals(c) 
+    	if ((root.getLeft()  != null && root.getLeft().getValue().equals (c))  ||
+    	    (root.getRight() != null && root.getRight().getValue().equals(c))) {
+    		return root;
+    	}
+
+    	// if it does not equal c and less than 0 gets the left side else gets the right side
+    	if (c.compareTo((Comparable) root.getValue()) < 0) {
+    		return searchParentNode(c, root.getLeft());
+    	} else {
+    		return searchParentNode(c, root.getRight());
+    	}
+    }
 }

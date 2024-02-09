@@ -10,7 +10,7 @@
 package trees;
 
 public class TreeNode {
-	private Object value;
+	private Comparable value;
 	private TreeNode left, right;
 	
 	/**
@@ -19,7 +19,7 @@ public class TreeNode {
 	 * @param initLeft
 	 * @param initRight
 	 */
-	public TreeNode (Object initValue, TreeNode initLeft, TreeNode initRight) {
+	public TreeNode (Comparable initValue, TreeNode initLeft, TreeNode initRight) {
 		value = initValue; left = initLeft; right=initRight;
 	}
 	
@@ -45,7 +45,7 @@ public class TreeNode {
 	 * setValue()
 	 * @param newValue
 	 */
-	public void     setValue (Object newValue)   {value = newValue;}
+	public void     setValue (Comparable newValue)   {value = newValue;}
 	
 	/**
 	 * setLeft()
