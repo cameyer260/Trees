@@ -1,0 +1,475 @@
+/**
+ * Group Members: Christopher Meyer, Joey Johnson, Shane Blankenship
+ * Project: Trees With Removal
+ * Teacher: Mr. Meinzen
+ * Class: AP Computer Science A
+ * Date: 12 February 2024
+ */
+
+public class Tree implements BSTree
+{
+    private TreeNode myRoot;
+ 
+    /**
+     * constructor method for Tree()
+     */
+    public Tree() 
+    {
+      myRoot = null;
+    }
+    
+    /**
+     * add method creates and adds a new node to the tree 
+     */
+    public void add(Comparable cmp) 
+    {
+    	if(cmp == null) {return;}
+		if(cmp.getClass() == Integer.class) {
+			cmp = cmp + "";
+		}
+
+		if(cmp.getClass() == Double.class) { 
+			cmp = cmp + "";
+		}
+
+		if(cmp.getClass() == Float.class) {
+			cmp = cmp + "";
+		}
+		myRoot = add(myRoot, cmp);
+    }
+    
+    /**
+    * private helper method for add method
+    * if r is null, sets r to new TreeNode with the cmp parameter
+    * as its value
+    * otherwise, puts it where it belongs
+    */
+    private TreeNode add(TreeNode r, Comparable cmp) 
+    {
+		if (r == null) { 
+			r = new TreeNode(cmp, null, null);
+		}
+		else {
+			if(cmp.compareTo((Comparable) (r.getValue())) < 0) {
+				r.setLeft(add(r.getLeft(), cmp));
+			}
+			else {
+				r.setRight(add(r.getRight(), cmp));
+			}
+		}
+	    return r;
+    }
+ 
+    /**
+     * gets the height of the tree
+     */
+    public int height() {
+    	return height(myRoot);
+    }
+    
+    /**
+     * private helper method for height method
+     * returns the integer value of the height for the tree
+     */
+    private int height(TreeNode r) {
+    	if(r == null) return 0;
+    	return 1 + Math.max(height(r.getLeft()), height(r.getRight()));
+    }
+    
+    /**
+     * search for a node with a given value
+     */
+    public boolean search(Comparable c) 
+    {
+    	if(c == null) {return false;}
+		if(c.getClass() == Integer.class) {
+			c = c + "";
+		}
+
+		if(c.getClass() == Double.class) { 
+			c = c + "";
+		}
+
+		if(c.getClass() == Float.class) {
+			c = c + "";
+		}
+		return search(c, myRoot);
+    }
+    
+    /**
+     * private helper method for search method
+     * return true if the comparable is found, false otherwise
+     */
+    private boolean search(Comparable c, TreeNode n) 
+    {
+    	if (n == null) {return false;}
+    	if(c.equals((Comparable) n.getValue())) {
+    		return true;
+    	}
+    	if(n.getLeft() != null && search(c, n.getLeft())) {
+    		return true; 
+    	}
+    	if(n.getRight() != null && search(c, n.getRight())) {
+    		return true; 
+    	}
+    	return false;
+    }
+ 
+    /**
+     * toStringPreOrder method
+     */
+    public String toStringPreOrder() {
+    	StringBuilder sb = new StringBuilder();
+    	toStringPreOrder(myRoot, sb);
+    	return sb.toString();
+    }
+    
+    /**
+     * toStringPreOrder private helper method
+     */
+    private void toStringPreOrder(TreeNode root, StringBuilder sb) {
+    	if (root != null) {
+            sb.append("(");
+            sb.append(root.getValue());
+            toStringPreOrder(root.getLeft(), sb);
+            toStringPreOrder(root.getRight(), sb);
+            sb.append(")");
+        }
+    }
+    
+    /**
+     * toStringInOrder method
+     */
+    public String toStringInOrder() {
+    	StringBuilder sb = new StringBuilder();
+    	toStringInOrder(myRoot, sb);
+    	return sb.toString();
+    }
+    
+    /**
+     * toStringInOrder private helper method
+     */
+    private void toStringInOrder(TreeNode root, StringBuilder sb) {
+    	if (root != null) {
+    		sb.append("(");
+            toStringInOrder(root.getLeft(), sb);
+            sb.append(root.getValue());
+            toStringInOrder(root.getRight(), sb);
+            sb.append(")");
+        }
+    }
+  
+	/**
+	 * 	removes a node with a given value
+	 */
+    public void remove(Comparable c) 
+    {
+    	if (c == null) {return;}
+		if(c.getClass() == Integer.class) {
+			c = c + "";
+		}
+
+		if(c.getClass() == Double.class) { 
+			c = c + "";
+		}
+
+		if(c.getClass() == Float.class) {
+			c = c + "";
+		}
+		remove(c, myRoot);
+    }
+    
+    /**
+     * private helper method to remove a node from the tree
+     */
+	private void remove(Comparable c, TreeNode t) 
+	{
+		//if a node with value c exists
+		if(search(c) && t != null)
+		{
+			TreeNode temp = searchNode(c);
+			TreeNode parent = searchParentNode(c);
+			//if temp is myRoot
+			if(searchParentNode((Comparable) c) == null) 
+			{
+				//if temp has no branches set null
+				if(temp.getLeft() == null && temp.getRight() == null)
+				{
+					myRoot = null; 
+					return;
+				}
+				//if temp only has a branch on the left set 
+				//that to myRoot
+				else if(myRoot.getRight() == null)
+				{
+					temp = myRoot.getLeft();
+					searchNode(c).setLeft(null);
+					myRoot = temp;
+				}
+				//if temp only has a branch on the right set 
+				//that to myRoot
+				else if(myRoot.getLeft() == null)
+				{
+					temp = myRoot.getRight();
+					searchNode(c).setRight(null);
+					myRoot = temp;
+				}
+				//if neither left or right are null find the 
+				//smallest value to the right and set its left
+				//to the myRoot's left, then set myRoot to temp
+				else
+				{
+					TreeNode l = getSmallest(temp.getRight());
+					TreeNode smallestParent = 
+							 searchParentNode((Comparable)l.getValue());
+					//if the smallest node has a right child
+					if(l.getRight() != null)
+					{
+						searchParentNode((Comparable) l.getValue())
+						                 .setLeft(l.getRight());
+						l.setRight(myRoot.getRight());
+						l.setLeft(myRoot.getLeft());
+						myRoot = l;
+					}
+					//if the smallest node does not have a right child
+					else
+					{
+						searchParentNode((Comparable) l.getValue())
+						                 .setLeft(null);
+						l.setRight(myRoot.getRight());
+						l.setLeft(myRoot.getLeft());
+						myRoot = l;
+					}
+				}
+					return;
+			}
+			//if temp is not myRoot and has both children
+			else if(temp.getLeft() != null && temp.getRight() != null)
+			{
+				//get the smallest node on temp's right and its parent
+				TreeNode a = searchNode((Comparable)temp
+						     .getValue()).getLeft();
+				TreeNode l = getSmallest(temp.getRight());
+				TreeNode smallestParent = 
+						 searchParentNode((Comparable)l.getValue());
+				//if l has a right child
+				if(l.getRight() != null)
+				{
+					if(a != null) 
+					{
+						//if temp is on the parent's left
+						if(parent.getLeft() != null && parent.getLeft()
+						   .getValue() == c)
+						{
+							searchNode((Comparable)l.getRight()
+									   .getValue()).setLeft(a);
+							searchNode((Comparable) parent.getValue())
+							           .setLeft(l);
+							searchParentNode((Comparable)l.getValue())
+							                 .setLeft(l.getRight());
+							searchNode((Comparable) l.getValue())
+							           .setRight(null);
+						}
+						//if temp is on the parent's right
+						if(parent.getRight() != null && parent.getRight()
+						   .getValue() == c)
+						{
+							searchNode((Comparable)l.getRight()
+									    .getValue()).setLeft(a);
+							searchNode((Comparable) parent.getValue())
+							           .setRight(l);
+							searchParentNode((Comparable)l.getValue())
+							                 .setLeft(l.getRight());
+							searchNode((Comparable) l.getValue())
+							           .setRight(null);
+						}
+					}
+				}
+				else
+				{
+					//link the smallest node's left to temp's left child
+					l.setLeft(temp.getLeft());
+					if(smallestParent.getLeft() != null && smallestParent
+					   .getLeft().getValue() == l.getValue())
+					{
+						smallestParent.setLeft(null);
+					}
+					if(smallestParent.getRight() != null && smallestParent
+					   .getRight().getValue() == l.getValue())
+					{
+						smallestParent.setRight(null);
+					}
+					l.setRight(temp.getRight());
+					//if temp is on the parent's left set the 
+					//parent's left to l
+					if(parent.getLeft() != null && parent.getLeft()
+					   .getValue() == c)
+					{
+						searchParentNode(c).setLeft(l);
+					}
+					//if temp is on the parent's right set the parent's 
+					//right to l
+					if(parent.getRight() != null && parent.getRight()
+					   .getValue() == c)
+					{
+						searchParentNode(c).setRight(l);
+					}
+				}
+			return;
+			}
+			//if temp is not myRoot and has no children	
+			else if(temp.getLeft() == null && temp.getRight() == null)
+			{
+				//if temp is on the parent's left set the parent's 
+				//left to null
+				if(parent.getLeft() != null && parent.getLeft()
+				   .getValue() == c)
+				{
+					searchParentNode(c).setLeft(null);
+				}
+				//if temp is on the parent's right set the parent's 
+				//right to null
+				if(parent.getRight() != null && parent.getRight()
+				   .getValue() == c)
+				{
+					searchParentNode(c).setRight(null);
+				}
+			}
+			//if temp is not myRoot and has one child	
+			else if(temp.getLeft() != null || temp.getRight() != null)
+			{
+				//if temp has a left child and is on its parent's left
+				//set temp's left child to its parent's left
+				if(temp.getLeft() != null && temp == parent.getLeft())
+				{
+					searchParentNode(c).setLeft(temp.getLeft());
+				}
+				//if temp has a left child and is on its parent's right
+				//set temp's left child to its parent's right
+				else if(temp.getLeft() != null && temp == 
+						parent.getRight())
+				{
+					parent.setRight(temp.getLeft());
+				}
+				//if temp has a right child and is on its parent's left
+				//set temp's right child to its parent's left
+				else if(temp.getRight() != null && temp == 
+						parent.getLeft())
+				{
+					searchParentNode(c).setLeft(temp.getRight());
+				}
+				//if temp has a right child and is on its parent's right
+				//set temp's right child to its parent's right
+				else if(temp.getRight() != null && temp == 
+						parent.getRight())
+				{
+					searchParentNode(c).setRight(temp.getRight());
+				}
+			}
+		}			
+	}
+	
+	/**
+	 * Returns a TreeNode with a given value
+	 */
+    public TreeNode searchNode(Comparable c) 
+    {
+		if(c.getClass() == Integer.class) {
+			c = c + "";
+		}
+
+		if(c.getClass() == Double.class) { 
+			c = c + "";
+		}
+
+		if(c.getClass() == Float.class) {
+			c = c + "";
+		}
+		return searchNode(c, myRoot);
+    }
+	
+    /**
+     * private helper method that returns a TreeNode with a given value
+     */
+	private TreeNode searchNode(Object c, TreeNode root)
+	{
+		if (root != null && root.getValue() == (c))
+		{
+			return root;
+		}
+
+		if (root != null && ((Comparable) c).compareTo(root.getValue())
+			< 0 && myRoot != null) {
+			return searchNode(c, root.getLeft());
+		} 
+		
+		if (root != null && ((Comparable) c).compareTo(root.getValue()) 
+			> 0 && myRoot != null)
+		{
+			return searchNode(c, root.getRight());
+		}
+		return root;
+	}
+	
+	/**
+	 * returns the smallest node in the tree
+	 */
+    private TreeNode getSmallest(TreeNode root)
+    {
+    	if(root == null)
+    	{
+    		return null;
+    	}
+    	TreeNode temp = root;
+    	while(temp.getLeft() != null)
+    	{
+    		temp = temp.getLeft();
+    	}
+    	return temp;
+    } 
+    
+    /**
+     * searches for a TreeNode's parent node
+     */
+    public TreeNode searchParentNode(Comparable c) 
+    {
+		if(c.getClass() == Integer.class) {
+			c = c + "";
+		}
+
+		if(c.getClass() == Double.class) { 
+			c = c + "";
+		}
+
+		if(c.getClass() == Float.class) {
+			c = c + "";
+		}
+		return searchParentNode(c, myRoot);
+    }
+    
+    /**
+     * private helper method to return a node's parent node
+     */
+    private TreeNode searchParentNode(Comparable c, TreeNode root) {
+    	// check if null then return null 
+    	if (root == null || root.getValue().equals(c)) {
+    		return null;
+    	}
+
+    	// checks if getLeft() or getRight() equals(c) 
+    	if ((root.getLeft()  != null && root.getLeft().getValue()
+    			.equals (c)) || (root.getRight() != null && 
+    			root.getRight().getValue().equals(c))) {
+    		return root;
+    	}
+
+    	// if it does not equal c and less than 0 gets the left side 
+    	//else gets the right side
+    	if (c.compareTo(root.getValue()) < 0) {
+    		return searchParentNode(c, root.getLeft());
+    	} else {
+    		return searchParentNode(c, root.getRight());
+    	}
+    }
+}
+
