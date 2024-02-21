@@ -172,7 +172,7 @@ public class Tree implements BinarySearchTreeInterface
 		if (c.getClass() == Long.class   ) 		{ c = c+""; }
 		if (c.getClass() == Character.class)	{ c = c+""; }
 
-		remove(c, myRoot);
+		remove((Comparable)c, myRoot);
     }
     
     /**
