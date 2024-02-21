@@ -268,6 +268,15 @@ public class Tree implements BinarySearchTreeInterface
 				myRoot = tempRightSide; 
 				return; 
 			}
+
+			// checks ot see if it is the front root and if there is a node on the right
+			if(parentNode == null && tempNode.getRight() != null && tempNode.getLeft() == null) {
+				TreeNode tempRightNode = tempNode.getRight(); 
+				TreeNode tempLeftSide= getLeftBiggest(tempRightNode); 
+
+				myRoot = tempLeftSide; 
+				return; 
+			}
 	}
 }
 	
