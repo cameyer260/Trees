@@ -54,7 +54,7 @@ public class redTeam {
         myTreeBoth.add(10); 
         myTreeBoth.add("EHS"); 
         myTreeBoth.add(5); 
-        // myTreeBoth.add(b); 
+        myTreeBoth.add(b); 
         myTreeBoth.add(60); 
         myTreeBoth.add("hello"); 
         myTreeBoth.add(3.2); 
