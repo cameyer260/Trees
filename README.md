@@ -1,4 +1,4 @@
-# Trees
+# Trees 🌲
 ----------
 - used to learn how data structures (aka, Trees are used)
 - red team code
