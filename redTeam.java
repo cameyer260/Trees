@@ -62,5 +62,9 @@ public class redTeam {
 
         System.out.println("\npreOrder both: "+myTreeBoth.toStringInOrder() +
             "\nin Order both: "+myTreeBoth.toStringPreOrder()); 
+
+        myTreeBoth.remove(b); 
+        System.out.println("\npreOrder both: "+myTreeBoth.toStringInOrder() +
+        "\nin Order both: "+myTreeBoth.toStringPreOrder()); 
     }
 }
