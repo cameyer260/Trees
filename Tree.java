@@ -5,7 +5,7 @@ package trees;
  * Project: Trees With Removal
  * Teacher: Mr. Meinzen
  * Class: AP Computer Science A
- * Date: 20 February 2024
+ * Date: 12 February 2024
  */
 
 public class Tree implements BinarySearchTreeInterface
@@ -178,11 +178,11 @@ public class Tree implements BinarySearchTreeInterface
     /**
      * private helper method to remove a node from the tree
      */
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private void remove(Comparable c, TreeNode t) 
 	 {
 		//if a node with value c exists
-		if(search(c) && t != null)
+		if(search(c) && t != null && searchParentNode(c) != null)
 		{
 			TreeNode tempNode = searchNode(c);
 			TreeNode parentNode = searchParentNode(c);
@@ -218,18 +218,29 @@ public class Tree implements BinarySearchTreeInterface
 				return; 
 			}
 
-			// case 3: if tempNode has a left node and a right node
-			// if(tempNode.getLeft() != null && tempNode.getRight() != null) {
-			// 	TreeNode rightBiggest = getRightBiggest(tempNode); 
-			// 	parentNode.setRight(rightBiggest); 
-			// 	rightBiggest.setLeft(tempNode.getLeft()); 
-			// 	return;
-			// }
-			if(tempNode.getLeft() != null && tempNode.getRight() != null) {
+			if(parentNode != null && tempNode.getLeft() != null && tempNode.getRight() != null) {
 				TreeNode leftNodeRightSide = getLeftBiggest(tempNode.getLeft()); 
 				parentNode.setLeft(leftNodeRightSide); 
+				return; 
 			}	
-		} 		
+		}
+			else {
+
+				// idk do smth
+
+				char clover = 5; 
+				System.out.println("help you have found an error "+ clover);
+
+				// if(parentNode == null) {
+				// 	Comparable d = (Comparable) tempNode.getLeft().getValue(); 
+				// 	TreeNode setLeft = searchNode(d);
+				// 	TreeNode value = getLeftBiggest(setLeft.getLeft()); 
+				// 	Comparable valueC = (Comparable) value; 
+				// 	TreeNode currentParent = searchParentNode(d);
+
+				// 	currentParent.setValue(valueC); 
+				// 	return; 
+		}
 	}
 	
 	/**
