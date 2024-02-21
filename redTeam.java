@@ -7,24 +7,24 @@ public class redTeam {
         Tree myTreeStrings = new Tree(); 
         Tree myTreeBoth    = new Tree(); 
 
-
         // first test with number tree
         // add all numbers to tree
         myTreeNumbers.add(5); 
-        myTreeNumbers.add(25); 
-        myTreeNumbers.add(50); 
+        myTreeNumbers.add(4); 
+        myTreeNumbers.add(10); 
+        myTreeNumbers.add(45); 
+        myTreeNumbers.add(40); 
+        myTreeNumbers.add(60); 
         myTreeNumbers.add(3); 
         myTreeNumbers.add(1); 
-        myTreeNumbers.add(4); 
-        myTreeNumbers.add(24); 
 
         System.out.println("preOrder numbers:      "+myTreeNumbers.toStringPreOrder()+"\n"+
             "in Order numbers:      "+myTreeNumbers.toStringInOrder()); 
         
 
         // remove a number node 
-        myTreeNumbers.remove("3"); 
-        System.out.println("\nremove number: 4       "+myTreeNumbers.toStringInOrder());
+        myTreeNumbers.remove("5"); 
+        System.out.println("\nremove number: 5       "+myTreeNumbers.toStringInOrder());
 
         System.out.println("\n");
 
@@ -62,18 +62,5 @@ public class redTeam {
 
         System.out.println("\npreOrder both: "+myTreeBoth.toStringInOrder() +
             "\nin Order both: "+myTreeBoth.toStringPreOrder()); 
-
-
-        // testing --- delete before you test red team 
-        // double x = 5.5; 
-        // double g = 5; 
-        // char c= (char) x; 
-        // char y = (char) g; 
-        // System.out.println((int) c);
-        // System.out.println(c); 
-        // System.out.println(y); 
-
-        // System.out.println(myTreeBoth.searchParentNode(5).getValue()); 
-
     }
 }
