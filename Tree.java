@@ -1,5 +1,3 @@
-package trees; 
-
 /**
  * Group Members: Christopher Meyer, Joey Johnson, Shane Blankenship
  * Project: Trees With Removal
@@ -7,6 +5,8 @@ package trees;
  * Class: AP Computer Science A
  * Date: 12 February 2024
  */
+
+package trees; 
 
 public class Tree implements BinarySearchTreeInterface
 {
@@ -223,25 +223,53 @@ public class Tree implements BinarySearchTreeInterface
 				parentNode.setLeft(leftNodeRightSide); 
 				return; 
 			}	
+
+
+			// might need another senario not sure yet ... 
+			// if(parentNode != null && tempNode.getLeft() == null && tempNode.getRight() == null) {
+			// 	parentNode.set
+			// }
 		}
-			else {
+	 else {
 
-				// idk do smth
+			// idk do smth & hope for the best :)
 
-				char clover = 5; 
-				System.out.println("help you have found an error "+ clover);
+			TreeNode tempNode = searchNode(c);
+			TreeNode parentNode = searchParentNode(c);
 
-				// if(parentNode == null) {
-				// 	Comparable d = (Comparable) tempNode.getLeft().getValue(); 
-				// 	TreeNode setLeft = searchNode(d);
-				// 	TreeNode value = getLeftBiggest(setLeft.getLeft()); 
-				// 	Comparable valueC = (Comparable) value; 
-				// 	TreeNode currentParent = searchParentNode(d);
+			TreeNode nextRoot = getLeftBiggest(tempNode.getRight()); 
 
-				// 	currentParent.setValue(valueC); 
-				// 	return; 
-		}
+			if(nextRoot != null) {
+				TreeNode smallParent = searchParentNode((Comparable) nextRoot.getValue()); 
+			}
+
+			// char clover = 5; 
+			// System.out.println("help you have found an error "+ clover);
+
+			// go down one time to the right side then go all the way down to the left side to get the smallest
+			// then replace parentNode with that TreeNode
+
+			// Inside the else block where parentNode is null
+			if (parentNode == null && tempNode.getLeft() != null && tempNode.getRight() != null) {
+				TreeNode rightNode = tempNode.getRight(); 
+
+				if (rightNode != null && rightNode.getLeft() != null) {
+					TreeNode leftBiggest = getLeftBiggest(rightNode); 
+					myRoot = leftBiggest; 
+					return; 
+				}		
+			}
+
+			// checks to see if it is the front root and if there is a node on the left
+			if(parentNode == null && tempNode.getLeft() != null && tempNode.getRight() == null) {
+				TreeNode tempLeftNode = tempNode.getLeft(); 
+				TreeNode tempRightSide= getRightBiggest(tempLeftNode); 
+
+				myRoot = tempRightSide; 
+				return; 
+			}
 	}
+}
 	
 	/**
 	 * Returns a TreeNode with a given value
@@ -285,12 +313,23 @@ public class Tree implements BinarySearchTreeInterface
 	}
 	
  	/**
-	* returns the smallest node in the tree
+	* returns the smallest left node in the tree
 	*/
 	private TreeNode getLeftBiggest(TreeNode r) {
 		if(r == null){return null;}
 	   		while(r.getLeft() != null) {
 		   		r = r.getLeft();
+	   		}
+		return r;
+   	} 
+
+	/**
+	* returns the smallest left node in the tree
+	*/
+	private TreeNode getRightBiggest(TreeNode r) {
+		if(r == null){return null;}
+	   		while(r.getRight() != null) {
+		   		r = r.getRight();
 	   		}
 		return r;
    	} 
