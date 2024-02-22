@@ -3,9 +3,37 @@ package trees;
 public class redTeam {
     
     public static void main(String[] arg) {
-        Tree myTreeNumbers = new Tree(); 
-        Tree myTreeStrings = new Tree(); 
-        Tree myTreeBoth    = new Tree(); 
+        Tree myTreeNumbers     = new Tree(); 
+        Tree myTreeStrings     = new Tree(); 
+        Tree myTreeBoth        = new Tree(); 
+        Tree treeDefaultTest   = new Tree(); 
+
+
+        // default test 
+        treeDefaultTest.add("L");
+        treeDefaultTest.add("D");
+        treeDefaultTest.add("A");
+        treeDefaultTest.add("F");
+        treeDefaultTest.add("B");
+        treeDefaultTest.add("R");
+        treeDefaultTest.add("M");
+        treeDefaultTest.add("U");
+        treeDefaultTest.add("T");
+        treeDefaultTest.add("V");
+       
+        System.out.println("\npreOrder both: "+treeDefaultTest.toStringInOrder() +
+            "\nin Order both: "+treeDefaultTest.toStringPreOrder());     
+        // test height & search function    
+        System.out.println(treeDefaultTest.height());
+        System.out.println(treeDefaultTest.search("M"));
+        treeDefaultTest.remove("A");
+        treeDefaultTest.remove("B");
+        treeDefaultTest.remove("U"); 
+        treeDefaultTest.remove("R");
+        treeDefaultTest.remove("L");
+       
+        System.out.println("\npreOrder both: "+treeDefaultTest.toStringInOrder() +
+            "\nin Order both: "+treeDefaultTest.toStringPreOrder()); 
 
         // first test with number tree
         // add all numbers to tree
@@ -63,8 +91,8 @@ public class redTeam {
         System.out.println("\npreOrder both: "+myTreeBoth.toStringInOrder() +
             "\nin Order both: "+myTreeBoth.toStringPreOrder()); 
 
-        myTreeBoth.remove(b); 
+        myTreeBoth.remove(     b); 
         System.out.println("\npreOrder both: "+myTreeBoth.toStringInOrder() +
-        "\nin Order both: "+myTreeBoth.toStringPreOrder()); 
+        "\nin Order both: "+myTreeBoth.toStringPreOrder());                   
     }
 }
