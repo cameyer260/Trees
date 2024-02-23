@@ -9,7 +9,7 @@
 
 package trees;
 
-public class Tree implements BinarySearchTreeInterface {
+public class Tree implements BSTree {
     private TreeNode myRoot;
     
     /**
@@ -162,7 +162,134 @@ public class Tree implements BinarySearchTreeInterface {
      * @param c
      */
     private void remove(TreeNode root, Comparable c) {
+    	TreeNode removeNode = this.searchNode(c);
+    	TreeNode parentNode = this.searchParentNode(c);
+    	TreeNode smallestGreater = this.smallestGreater(removeNode);
+    	TreeNode parentSG = searchParentNode((Comparable) smallestGreater.getValue()); //parent of smallest greater
     	
+    	//case 0- removeNode is a root
+    	if(parentNode == null) {
+    		if(smallestGreater.getRight() == null) {
+    			parentSG.setLeft(null);
+    			smallestGreater.setRight(removeNode.getRight());
+    			smallestGreater.setLeft(removeNode.getLeft());
+    			myRoot = smallestGreater;
+    		} else {
+    			parentSG.setLeft(smallestGreater.getRight());
+    			smallestGreater.setRight(removeNode.getRight());
+    			smallestGreater.setLeft(removeNode.getLeft());
+    			myRoot = smallestGreater;
+    		}
+    		return;
+    	}
+    	
+    	//onLeft is true if the remove node is to the left of parent node, false otherwise
+    	//this will be used to determine whether to set the right or left of the parent node
+    	//to the new node or null depending on the child node of removeNode
+    	boolean onLeft = false;
+    	if(c.compareTo((Comparable) parentNode.getValue()) < 0) {
+        	onLeft = true;
+        }
+        
+    	//case 1- removeNode has at most one child
+    	//instance 1- remove node has a node to the right
+    	if ((removeNode.getLeft() == null) &&
+        	(removeNode.getRight() != null)) {
+    		if(onLeft) {
+    			parentNode.setLeft(removeNode.getRight());
+    			return;
+    		} else {
+    			parentNode.setRight(removeNode.getRight());
+    			return;
+    		}
+    	}
+    	
+    	//instance 2- remove node has a node to the left
+    	if((removeNode.getLeft() != null) &&
+    	   (removeNode.getRight() == null)) {
+    		if(onLeft) {
+    			parentNode.setLeft(removeNode.getLeft());
+    			return;
+    		} else {
+    			parentNode.setRight(removeNode.getLeft());
+    			return;
+    		}
+    	}
+    	
+    	//instance 3- remove node has no child nodes
+    	if((removeNode.getLeft() == null) &&
+    	   (removeNode.getRight() == null)) {
+    		if(onLeft) {
+    			parentNode.setLeft(null);
+    			return;
+    		} else {
+    			parentNode.setRight(null);
+    			return;
+    		}
+    	}
+    	
+    	//case 2- remove node has 2 child nodes
+    	if((removeNode.getLeft() != null) && 
+    	   (removeNode.getRight() != null)) {
+    		//instance 1- smallestGreater is the right child of delete note
+    		if(removeNode.getRight() == smallestGreater) {
+    			smallestGreater.setLeft(removeNode.getLeft());
+    			if(onLeft) {
+    				parentNode.setLeft(smallestGreater);
+    				return;
+    			} else {
+    				parentNode.setRight(smallestGreater);
+    				return;
+    			}
+    		}
+    		
+    		//instance 2- smallestGreater does not have a right child
+    		if(smallestGreater.getRight() == null) {
+    			parentSG.setLeft(null);
+    			smallestGreater.setRight(removeNode.getRight());
+    			smallestGreater.setLeft(removeNode.getLeft());
+    			if(onLeft) {
+    				parentNode.setLeft(smallestGreater);
+    				return;
+    			} else {
+    				parentNode.setRight(smallestGreater);
+    				return;
+    			}
+    		}
+    		
+    		//instance 3- smallestGreater has a right child
+    		else { 
+    			parentSG.setLeft(smallestGreater.getRight());
+    			smallestGreater.setRight(removeNode.getRight());
+    			smallestGreater.setLeft(removeNode.getLeft());
+    			if(onLeft) {
+    				parentNode.setLeft(smallestGreater);
+    				return;
+    			} else {
+    				parentNode.setRight(smallestGreater);
+    				return;
+    			}
+    		}		
+    	}
+    }
+    
+    public TreeNode smallestGreater(TreeNode node) {
+    	return privateSmallestGreater(node);
+    }
+    
+    private TreeNode privateSmallestGreater(TreeNode node) {
+    	TreeNode temp = node;
+    	if(node.getRight() != null) {
+    		temp = node.getRight();
+    		while(temp.getLeft() != null) {
+    			temp = temp.getLeft();
+    		}
+    	}
+    	return temp;
+    }
+    
+    public TreeNode searchNode(Comparable c) {
+    	return searchNode(c, myRoot);
     }
     
     /**
@@ -171,18 +298,21 @@ public class Tree implements BinarySearchTreeInterface {
      * @param c
      * @return
      */
-//    private TreeNode searchNode(Comparable c, TreeNode root) {
-//    	if(c.equals((Comparable) root.getValue())) {
-//    		return root;
-//    	}
-//    	if(root.getLeft() != null && search(c, root.getLeft())) {
-//    		return //tree node;
-//    	}
-//    	if(root.getRight() != null && search(c, root.getRight())) {
-//    		return //tree node; 
-//    	}
-//    	return //tree node;
-//    }
+    private TreeNode searchNode(Comparable c, TreeNode root) {
+    	if(root.getValue() == c) {
+    		return root;
+    	}
+    	
+    	if((c.compareTo((Comparable) root.getValue()) < 0)) {
+    		return searchNode(c, root.getLeft());
+    	}
+    	
+    	if((c.compareTo((Comparable) root.getValue()) > 0 )) {
+    		return searchNode(c, root.getRight());
+    	}
+    	
+    	return root;
+    }
     
     /**
      * searchParentNode method

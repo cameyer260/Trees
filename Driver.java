@@ -16,39 +16,31 @@ public class Driver {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//case 1
+
 		Tree myTree1 = new Tree();
-		myTree1.add("Bill");
-		myTree1.add("Fred");
-		myTree1.add("Joe");
-		myTree1.add("Henrietta");
-		myTree1.add("Mr. M");
-		myTree1.add("Noman");
-		myTree1.add("Alfred");
-		myTree1.add("Al");
-		myTree1.add("Fred");
+		myTree1.add("L");
+		myTree1.add("D");
+		myTree1.add("A");
+		myTree1.add("F");
+		myTree1.add("B");
+		myTree1.add("R");
+		myTree1.add("M");
+		myTree1.add("U");
+		myTree1.add("T");
+		myTree1.add("V");
+
+		//printout tree toStrings() before removal
+		System.out.println("inOrder" + myTree1.toStringInOrder());
+		System.out.println("preOrder" + myTree1.toStringPreOrder());
 		
-		//case 2 (Henrietta and Fred added to the tree in swapped order
-		Tree myTree2 = new Tree();
-		myTree2.add("Bill");
-		myTree2.add("Henrietta");
-		myTree2.add("Joe");
-		myTree2.add("Fred");
-		myTree2.add("Mr. M");
-		myTree2.add("Noman");
-		myTree2.add("Alfred");
-		myTree2.add("Al");
-		myTree2.add("Fred");
+		myTree1.remove("A");
+		myTree1.remove("B");
+		myTree1.remove("U");
+		myTree1.remove("R");
+		myTree1.remove("L");
 		
-		//case 1
-		System.out.println("Case 1: ");
-		System.out.println("In Order: " + myTree1.toStringInOrder());
-		System.out.println("Pre Order: " + myTree1.toStringPreOrder());
-		System.out.println("");
-		
-		//case 2
-		System.out.println("Case 2: ");
-		System.out.println("In Order: " + myTree2.toStringInOrder());
-		System.out.println("Pre Order: " + myTree2.toStringPreOrder());
+		//printout tree toStrings() after removal
+		System.out.println("inOrder" + myTree1.toStringInOrder());
+		System.out.println("preOrder" + myTree1.toStringPreOrder());
 	}
 }
